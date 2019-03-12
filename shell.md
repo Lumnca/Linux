@@ -10,7 +10,7 @@
 
 ### :rugby_football:Shell简介  ###
 
-:arrow_double_up:[返回目录](https://github.com/Lumnca/Linux/edit/master/shell.md#p)
+:arrow_double_up:[返回目录](https://github.com/Lumnca/Linux/blob/master/shell.md#tennisshell)
 
 * Shell 是一个用 C 语言编写的程序，它是用户使用 Linux 的桥梁。Shell 既是一种命令语言，又是一种程序设计语言。
 
@@ -44,7 +44,7 @@ Linux 的 Shell 种类众多，常见的有：
 
 ### :rugby_football:创建Shell脚本  ###
 
-:arrow_double_up:[返回目录](https://github.com/Lumnca/Linux/edit/master/shell.md#p)
+:arrow_double_up:[返回目录](https://github.com/Lumnca/Linux/blob/master/shell.md#tennisshell)
 
 首先创建一个名为shell脚本文件(.sh为shell文件名)：
 
