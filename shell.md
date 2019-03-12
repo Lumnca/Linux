@@ -2,7 +2,7 @@
 
 <p id="t"></p>
 
-:arrow_down_small:[Shell简介](https://github.com/Lumnca/Linux/edit/master/shell.md#a1)
+:arrow_down_small:[Shell简介](https://github.com/Lumnca/Linux/blob/master/shell.md#rugby_footballshell简介)
 
 :arrow_down_small:[创建Shell脚本](https://github.com/Lumnca/Linux/edit/master/shell.md#a2)
 
