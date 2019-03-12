@@ -2,9 +2,9 @@
 
 <p id="t"></p>
 
-:arrow_down_small:[Shell简介](https://github.com/Lumnca/Linux/edit/master/shell.md#p#a1)
+:arrow_down_small:[Shell简介](https://github.com/Lumnca/Linux/edit/master/shell.md#a1)
 
-:arrow_down_small:[创建Shell脚本](https://github.com/Lumnca/Linux/edit/master/shell.md#p#a2)
+:arrow_down_small:[创建Shell脚本](https://github.com/Lumnca/Linux/edit/master/shell.md#a2)
 
 <p id="a1"></p>
 
