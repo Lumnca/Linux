@@ -4,7 +4,7 @@
 
 :arrow_down_small:[Shell简介](https://github.com/Lumnca/Linux/blob/master/shell.md#rugby_footballshell简介)
 
-:arrow_down_small:[创建Shell脚本](https://github.com/Lumnca/Linux/blob/master/shell.md#tennisshell)
+:arrow_down_small:[创建Shell脚本](https://github.com/Lumnca/Linux/blob/master/shell.md#rugby_football%E5%88%9B%E5%BB%BAshell%E8%84%9A%E6%9C%AC)
 
 <p id="a1"></p>
 
