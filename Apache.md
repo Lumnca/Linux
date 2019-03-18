@@ -33,6 +33,8 @@ systemctl start httpd
 systemctl enable httpd
 ```
 
+***
+
 ### :earth_americas:配置服务文件参数 ###
 
 在安装后，如果你需要配置一些参数才能是你的服务器工作。最主要的就是配置文件。配置文件所在的文件夹如下表：
