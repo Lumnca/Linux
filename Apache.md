@@ -46,5 +46,72 @@ systemctl enable httpd
 |错误日志|/var/log/httpd/error_log|
 
 
+首先修改主配置文件：
+
+```shell
+ vim /etc/httpd/conf/httpd.conf
+```
+
+你会发现这个配置文件有很多内容，达到了353行，但是很多行前面都带了#，说明这只是说明文段。切记不要随意删除或者修改配置文件的内容，一定要按照要求修改。
+
+所以你需要了解没有#的段落就行，下面给出具体含义：
+
+|参数|说明|
+|:--:|:--:|
+|ServerRoot|服务器根目录|
+|ServerAdmin|管理员邮箱|
+|User|运行服务的用户|
+|Group|运行服务的用户组|
+|ServerName|网站服务器的域名|
+|DocumentRoot|网页数据根目录|
+|Directory|网站数据目录的权限|
+|Listen|监听的IP地址与端口号|
+|DirectoryIndex|默认的索引页页面|
+|ErrorLog|错误日志文件|
+|CustomLog|访问日志文件|
+|Timeout|网页超时时间，默认300秒|
+
+现在还是不要对文件进行修改，采用默认设置。为了使其他机器能够访问到我们服务器的网站，我们还需要开启http服务与防火墙。如果你的服务器或者虚拟机已经把80（默认端口，可以修改）端口设置为可以访问，那么你就可以直接输入自己的IP：80就可以看到Apache的默认网页。如果不能访问就需要设置打开80端口：
+
+
+### :earth_americas:SELinux安全子系统 ###
+
+SELinux是美国国家安全局在Linux开源社区的帮助下开发的一个强制访问控制的安全子系统。配置这个对黑客入侵服务器，也无法利用系统内部的服务程序进行越权操作。由于这项技术比较难，导致很多人都没有在部署Linux系统后直接讲SELinus禁用了，这绝对不是明智的选择。
+
+SELinux有三种模式：
+
+ * enforcing ： 强制启用安全策略模式，将拦截服务的不合法请求
+ 
+ * permissive ： 遇到服务越权访问时，只发出警告而不强制拦截。
+ 
+ * disabled ： 对于越权的行为不警告也不拦截。
+ 
+ 禁用SELinux服务后可以减少报错几率，但是不是太建议这样做，我们可以查看自己系统的默认模式：
+ 
+ ```
+  vim /etc/selinux/config
+ ```
+ 
+ ![](https://github.com/Lumnca/Linux/blob/master/Img/a2.png)
+ 
+可以看到我们的默认形式是disabled，我们可以把它修改为enforcing，如下在SELINUX=修改为
+
+`SELINUX=enforcing`
+
+修改后并不会马上生效，需要重启才能看到运行模式，使用getenforce查看当前模式：
+
+```
+getenforce
+```
+
+重启再使用getenforce就可以更改模式了，使用setenforce 0|1 就可以启用当前或者禁用当前模式
+
+```
+setenforce 0   //禁用
+setenforce 1   //启用
+```
+
+但是这个仅限于当前，重启之后就会恢复原样。
+
 
 
