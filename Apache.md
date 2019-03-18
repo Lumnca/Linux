@@ -1,6 +1,6 @@
 # :globe_with_meridians: Apache服务器
 
-![](https://baike.baidu.com/pic/apache/8512995/0/d35a10f4a31ca557dcc47427?fr=lemma&ct=single)
+
 
 ***
 
@@ -13,3 +13,38 @@
 ***
 
 ### :earth_americas:Apache安装 ###
+
+使用命令行安装程序：
+
+```shell
+yum install httpd
+```
+
+出现安装信息，最后会出现如下提示，输入y继续：
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/a1.png)
+
+安装结束后自动退出停止。
+
+设置开机自启：
+
+```shell
+systemctl start httpd
+systemctl enable httpd
+```
+
+### :earth_americas:配置服务文件参数 ###
+
+在安装后，如果你需要配置一些参数才能是你的服务器工作。最主要的就是配置文件。配置文件所在的文件夹如下表：
+
+|配置文件的名称|所在文件|
+|:--:|:--:|
+|服务目录|/etc/httpd|
+|主配置文件|/etc/httpd/conf/httpd.conf|
+|网站数据目录|/var/www/html|
+|访问日志|/var/log/httpd/access_log|
+|错误日志|/var/log/httpd/error_log|
+
+
+
+
