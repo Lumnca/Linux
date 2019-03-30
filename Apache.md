@@ -139,10 +139,56 @@ restorecon  -Rv /home/www/abc
 
 当然这SELinux安全上下文部分可以不用设置。只是介绍有相关操作。
 
+***
 
+### :earth_americas:多网站配置 ###
 
+Apache除了默认的网址在`var/www/html`下，我们还可以添加其他的网站。第一步需要配置其网站的根目录，推荐在www文件中，我们首先在www文件下创建一个webs文件夹：
 
+`# mkdir /var/www/webs`
 
+然后为webs添加网站根目录作用的配置文件。
+
+`在一个主机上面通过不同端口 放置网站 这里我们使用虚拟主机技术配置文件信息 可以直接写在httpd.conf中 也可以不直接写在httpd.conf中 在/etc/httpd/conf/httpd.conf 中的最后一行 IncludeOptional conf.d/*.conf 是一句包含信息 可以把你的配置文件写在一个任意名字.conf的配置文件里面 apache会自动包含到httpd.conf里面 例如我们要部署一个网站,其目录名为webs，那么我们在/etc/httpd/conf.d新建一个 Webs.conf的配置文件`
+
+创建配置文件（需要与webs文件夹同名）
+
+`# vim /etc/httpd/conf.d/webs.conf`
+
+在文件中写入以下内容：
+
+```xml
+<Directory "/var/www/webs">      
+ Options Indexes FollowSymLinks
+ AllowOverride all
+ Require all granted
+</Directory>
+Listen 8080
+<VirtualHost *:8080>
+  DocumentRoot "/var/www/webs"
+</VirtualHost> 
+```
+
+其中`<Directory "/var/www/webs"> `是网站的根目录的位置。Listen 8080代表的是监听8080端口，也就是用这个端口访问这个网站。httpd -t 检查是否错误 Syntax OK表示配置正确
+
+`# httpd -t`
+
+起效需要重启Apache
+
+```
+# systemctl restart httpd 
+```
+
+重启后输入你的ip地址即可访问，如果出现页面不能访问，这说明防火墙已阻止访问，需要关闭防火墙，允许外网访问。
+
+如果需要网页关闭防火墙 允许外网访问
+
+```
+# sed -ri '/^SELINUX=/cSELINUX=disabled' /etc/selinux/config 
+# setenforce 0 
+# systemctl stop firewalld.service  
+# systemctl disable firewalld.service 
+```
 
 
 
