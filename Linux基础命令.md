@@ -1,6 +1,18 @@
+<b id='t'></b>
+
 # :jack_o_lantern:Linux基础命令 #
 
+***
+
+:arrow_double_down:[系统常用命令](#a1)
+
+:arrow_double_down:[CentOS常用命令](#a2)
+
+<b id='a1'></b>
+
 ### :one:系统常用命令 ###
+
+:arrow_double_up:[返回目录](#t)
 
 **关闭系统**
 
@@ -74,9 +86,11 @@
 
 ![](https://github.com/Lumnca/Linux/blob/master/Img/a3.png)
 
-
+<b id='a2'></b>
 
 ### :two:目录常用命令 ###
+
+:arrow_double_up:[返回目录](#t)
 
 **列出当前目录中的文件和子目录**
 
@@ -252,13 +266,202 @@ cat作用：
 
 >#cat>filel<<EOF
 
+**管道 |（pipes）*
 
+把前一个命令的标准输出作为下一个命令的标准输入.
 
+示例:
 
+>man  cat | more          #查看文件内容，多于一屏则暂停
 
+>#l1 | grep "drw"         #把搜索到文件列表过滤，包含drw将显示出来
 
+># ls /etc | grep 'sys'   #搜索etc目录下含有sys的文件，如下
 
+![](https://github.com/Lumnca/Linux/blob/master/Img/a4.png)
 
+**（管道）参数传递命令**
 
+将前一个命令的标准输出作管道后一个命令的参数示例
 
+>#echo "--help" | cat          #等价于cat  "--help"
 
+>#echo "--help" | xargs cat    #等价于cat  --help
+
+>如果在命令行只输入cat，cat会等待标准输入，这时通过键盘输入并按回车让cat读取输入，cat会原样返回，如输出：--help
+
+>如果在命令行输入cat，同时输入--help并按回车，则会打印帮助
+
+使用这个前提是命令含有参数选项才行，如下为显示var文件夹下的文件：
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/a5.png)
+
+**Xargs总结**
+
+* 不加xargs： 先将管道后面的命令回车执行再从键盘里输入管道符前面命令执行的结果
+
+* 加上xargs： 先从键盘输入管道符前面命令执行的结果再回车,回车的先后顺序不一样
+
+* 实际运用时和find命令配合较多
+
+**分页显示**
+
+more[文件名]
+
+* “空格键”、“Page Down”：查看下一页
+* “b”键、“Page Up”：反向查看上一页
+* “q”键：退出查看
+* 使用方向键查看，可以随意前后浏览文件示例
+ 
+>#more filel.txt    #查看文件内容
+
+>#man ls | more     #查看ls的使用手册
+
+**查看文件中的行数、字数和字符数**
+
+wc[文件名]
+
+* -l统计文件中的行数
+* -c统计文件中的字符个数
+* -w统计文件中的单词个数
+
+示例：
+
+>#grep ‘dhcp' /var/log/messages | wc -l  #统计系统日志messages中包含dhcp字符串的行数
+
+>#man ls | grep 'ls' | wc -l            #统计ls手册中含有ls的行数
+
+**显示文件的详细信息**
+
+格式
+
+file[文件名]
+
+>file a.txt
+
+查看文件的开头部分
+
+>#head testl.txt
+
+查看文件的结尾部分
+
+>#tail testl.txt
+
+示例：
+
+查看系统日志，服务报错时特别有用
+
+>#tail -f    /var/log/messages    #循环显示最新添加的内容
+
+>#ctrl+c退出
+
+>#tail-20/var/log/messages        #查看日志最后20行
+
+**回显字符串内容**
+
+echo回显内容
+
+示例
+
+* 与重定向符结合
+
+>#echo “hello” >test       #创建文件test并添加内容hello,存在会覆盖原有类容
+
+>#echo “hello” >>test      #向已有的文件test中增加内容hello
+
+**比较两个文件内容的不同**
+
+diff[选项][源文件][目标文件]
+
+选项：
+
+* -a：将所有的文件当作文本文件处理
+* -b：忽略空格造成的不同
+* -B：忽略空行造成的不同
+* -i：忽略大小写的变化
+
+示例
+
+>#diff file1.txt file2.txt
+
+**alias（别名）-重启失效**
+
+格式：alias alias_name="command-definition"
+
+可以为一些常用的命令设置别名，方便调用
+
+示例：
+
+>#alias psa="/bin/ps -aux"       #方便查看进程
+
+>#alias f="find/ -name"          #方便全盘查找
+ 
+>#alias file='cat /etc/sysconfig/network-scripts/ifcfg-ens33'   #查看网络配置文件内容
+
+**alias-永久生效**
+
+* 配置文件：/etc/bashrc
+* 每一个运行bash shell的用户都会执行此文件
+* 当bash shell被打开时，该文件被读取
+
+设置步骤：
+
+>#vim /etc/bashrc
+
+在最后加入alias alias_name="command-definition“
+
+重启生效
+
+**通配符**
+
+* `*` ：通配符，代表任意字符（0到多个）
+
+* ？：通配符，代表一个字符
+
+示例：
+
+`#ls  *test*     #*表示后面不论接几个字符都接受（没有字符也接受）`
+`#ls test？      #？表示后面当且仅当接一个字符时才接受`
+`#ls test？？？  #？？？表示一定要接三个字符`
+
+**查找工具find**
+
+`find path -option |-print][-exec-ok command{}\；]`
+
+·path：要搜索文件的目录，若省略，则使用当前目录进行搜索
+
+* -option：用来控制搜索方式
+
+* -print：将搜索结构输出到标准输出[缺省设置]
+
+* -exec command {} \；对查找的结果进行指定的操作{}和\；之间有空格
+
+* -ok：和-exec的作用相同，只不过在操作前要询用户
+
+示例
+
+```
+$find ~ -name"*.txt" -print              #在$HOME中查.txt文件并显示
+$find . -name “[A-Z]*” -print            #在当前目录查找所有以大写字母开头的文件
+$find . -size +1000000c -print           #查长度大于1Mb的文件
+$find /etc-name "passwd*" -exec grep "cnscn"f\；
+
+#看是否存在cnscn用户
+find/home-mtime-2/home下最近两天内改动过的文件find/home-atime-1查1天之内被存取过的文件find/-amin-10查找在系统中最后10分钟访问的文件
+```
+
+如下是寻找/etc中含有sys字符串开头的所有文件：
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/a6.png)
+
+**find和xargs**
+
+如何查找/root下所有包含字符串“hello”的文件？
+
+>#find/root | grep "hello"
+
+>#find/root | xargs grep "hello"
+
+如下是查看website文件的大小：
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/a7.png)
