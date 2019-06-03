@@ -291,12 +291,44 @@ VISUAL BLOCK（文本块处理功能-批量注释、删除）命令模式下输�
 **9、执行shell命令（末行模式）在vi中执行shell命令：**
 
 ：lcommand（不离开vi执行一条shell命令）
+
 ：rlcommand（将command执行的结果放到当前行之后）
 
+
 例：
+
 `：！date#在屏幕底端显示当前日期时间`
+
 `：r！date#将日期和时间写入正编辑文件当前行下一行`
 
+
+***
+
+<b id="a3"></b>
+
+### :trophy:vim使用 ###
+
+:arrow_up:[返回目录](#t)
+
+vim相比vi的优点：
+
+1、多级撤消：在vi里，按u只能撤消上次命令，在vim里可以无限制的撤消
+
+2、易用性：vi只能运行于unix，而vim可以运行于unix，windows，mac等多平台
+
+3、语法加亮：vim可以用不同的颜色来加亮你的代码
+
+4、可视化操作：vim不仅可以在终端运行，也可以运行于xwindow、mac os、windows
+
+5、对vi的完全兼容：某些情况下，你可以把vim当成vi来使用
+
+对于有些liunx没有vim命令说明没有安装vim，可以自行安装：
+
+`#yum  install vim`
+
+vim的使用与vi一致。
+
+对于vim还有他的配置文件：`/etc/vimc`
 
 
 
