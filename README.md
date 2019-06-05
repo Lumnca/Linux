@@ -8,6 +8,8 @@
 
 :tokyo_tower:[用户和用户组管理](https://github.com/Lumnca/Linux/blob/master/%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86.md)
 
+:tokyo_tower:[LVM管理](https://github.com/Lumnca/Linux/blob/master/LVM%E7%AE%A1%E7%90%86.md)
+
 :tokyo_tower:[Shell](https://github.com/Lumnca/Linux/blob/master/shell.md)
 
 
