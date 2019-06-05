@@ -190,13 +190,26 @@ LVM分层及流程：PV>>VG>>LV
 
 ![](https://github.com/Lumnca/Linux/blob/master/Img/a22.png)
 
+***
 
+**用途2：为现有LV扩容**
 
+查看逻辑卷lvs
 
+>#lvextend -L +500M  /dev/vgdemo/Lvodemo1  +500M空间
 
+>#1vextend -L 2G   /dev/vgdemo/1vole   扩展到2G容量
 
+3、在线执行调整（不影响磁盘正常使用），使增加的容量马上使用
 
+* xfs:xfs_growfs
+* ext:resize2fs
 
+使修改的逻辑卷生效：`#xfs_growfs /dev/centos/root `  /dev/centos/root为修改的逻辑卷
+
+查看磁盘分区上的可使用的磁盘空间：df-h
+
+不执行在线执行调整，则可使用的磁盘空间不会变化（没加入使用）
 
 
 
