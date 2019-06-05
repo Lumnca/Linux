@@ -98,16 +98,97 @@ LVM分层及流程：PV>>VG>>LV
 :arrow_double_up:[返回目录](#t)
 
 
+**:one:添加硬盘（虚拟机）**
+
+首先要为我们的虚拟机添加硬盘：
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/a14.png)
+
+添加完成后可以输入`#lsblk` 查看硬盘设配：
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/a15.png)
+
+**:two:创建分区**
+
+对新盘分区-root权限
+
+使用fdisk命令对新盘进行分区
+
+```
+1、将磁盘/dev/sdb  创建为扩展分区  -extened
+2、将扩展分区划分两个逻辑分区，sdb5：2G，sdb6：3G
+```
+
+创建步骤如下：
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/a16.png)
+
+我们将硬盘全部分为扩展分区，设置为4999M的原因是5G内存实际上只有4.9G。分完后输入w保存设置。
+
+接下来在再对扩展分区进行分区
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/a17.png)
+
+我将扩展分区分为了2个，一个2G，一个2.9G。接下来再次进入分区类型将其设置为LVM：
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/a18.png)
+
+重复这个操作设置所有分区，保存后输入：fdisk -l，可以看到如下：
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/a19.png)
+
+出现LVM说明操作成功。
+
+**:three:步骤3：创建PV**
+
+使用pvcreate命令创建物理卷，pvs 查看物理卷信息，pvdisplay 查看物理卷详细信息
+
+如下对两个设备进行创建物理卷
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/20.png)
+
+**:four:步骤4：创建VG**
+
+将PV加入VG vgcreate创建新的vg
+
+* vgextend    扩展已有的vg 
+* vg          s查询卷组
+* vgdisplay   查询卷组详情
+
+`#vgcreate[新vg名称][pv1][pv2]…` 创建新的卷组：
+
+>#vgcreate vgdev /dev/sdb5      将/dev/sdb5分到新建的vgdev组
+
+`#vgextend[已有vg名称][pv1][pv2]…`  扩展已有卷组：
+
+>#vgextend centos /dev/sdb6        将/dev/sdb6作为centos的扩展（即将centos组扩大）
+
+**:five:步骤5：创建LV**
+
+* 1vcreate：命令从卷组里划分一个新的逻辑卷（小于物理卷）
+* -L：指定逻辑卷的大小，单位为“kKmMgGtT”字节
+* -n：指定逻辑卷名称，默认名称1vol0…
+
+如下：
+
+>#lvcreate -L 960M -n developing vgdev            从vgdev组中创建大小为960M的名为developing的逻辑卷组。
+
+查看逻辑卷组：lvs
 
 
+**:six:步骤6：使用：格式化逻辑卷并挂载**
 
+新逻辑卷需要经过格式化并挂载到系统里，才能正常使用使用mkfs.xfs格式化为CentOS7的xfs文件系统：
 
+>mkfs.xfs /dev/vgdev/developing        格式化为xfs
 
+再进行挂载：
 
+![](https://github.com/Lumnca/Linux/blob/master/Img/a21.png)
 
+想要永久生效，需要编写/etc/fstab配置文件。将上面得到的UUID写入：
 
-
-
+![](https://github.com/Lumnca/Linux/blob/master/Img/a22.png)
 
 
 
