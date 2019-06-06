@@ -10,6 +10,8 @@
 
 :tokyo_tower:[LVM管理](https://github.com/Lumnca/Linux/blob/master/LVM%E7%AE%A1%E7%90%86.md)
 
+:tokyo_tower:[网络管理](https://github.com/Lumnca/Linux/blob/master/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE.md)
+
 :tokyo_tower:[Shell](https://github.com/Lumnca/Linux/blob/master/shell.md)
 
 
