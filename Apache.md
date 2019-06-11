@@ -213,14 +213,53 @@ DocumentRoot "/home/www"   ------你的目录
 
 `chmod -R 755 /home/www ` /home/www为你想要修改的位置，同时关闭SELinux永久设置。不要设置在root/目录下，因为root是超级管理员，其他用户访问不了。同时完成以上操作就可以更换目录。
 
+### :earth_americas:配置个人网站 ###
 
+系统默认网站主页位置：/var/www/html,如果希望让每个用户都可以建立自己的个人网站，则需要为每个用
+户在Home目录建立一个放置网页的目录。
 
+示例：为用户 student 建立个人主页目录
 
+步骤：
 
+* 1、建立crs账号；
+#useradd student
 
+* 2、建立个人主页文件夹和默认主页文件
 
+```
+#cd /home/student
+#mkdir www
+```
 
+* #vim www/index.html输入内容并保存：This is student home pagel！！
 
+* 3、设置访问权限
+
+```
+#chmod 755/home/student
+#chmod 755/home/student/www
+#chown student:student/home/student/www
+```
+
+* 4、设置httpd.conf文件
+
+`#vi/etc/httpd/conf/httpd.conf`
+
+添加如下内容：
+
+```xml
+Alias/crs"/home/crs/www"
+<Directory"/home/crs/www">
+AllowOverride None
+Options None
+Require all granted
+</Directory>
+```
+
+5、重启apache并测试（关闭防火墙和selinux）
+
+`#systemctl restart httpd`
 
 
 
