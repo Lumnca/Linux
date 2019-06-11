@@ -261,5 +261,40 @@ Require all granted
 
 `#systemctl restart httpd`
 
+测试输入你的ip地址/studnet 如：xxx.xxx.xxx.xxx/student，如果出现This is student home pagel！！说明配置成功。
+
+### :earth_americas:虚拟主机 ###
+
+**虚拟主机（Virtual Host）**
+
+* 在同一台机器搭建属于不同域名或者基于不同IP的多个网站服务的技术.
+* 可以为运行在同一物理机器上的各个网站指配不同的IP和端口，也可让多个网站拥有不同的域名.
+
+**基于IP的虚拟主机：**
+
+基于IP的虚拟主机使用有效的并且已经注册的IP地址，每个虚拟主机一个IP地址和端口号：
+
+* 1、IP地址相同，但端口号不同
+* 2、IP地址不相同，端口号相同（默认端口号），可以和域名结合
+
+1、IP地址相同，但端口号不同：
+
+在httpd.conf中添加：
+
+```
+<Directory"/home/student/www">
+   Options Indexes FollowSymLinks
+   AllowOverride all
+   Require all granted
+</Directory>
+
+Listen 8088   #设置监听端口8088
+
+<VirtualHost*：8088>
+    DocumentRoot"/home/student/www"
+</VirtualHost>
+```
+
+`#systemctl restart httpd` 重启
 
 
