@@ -61,7 +61,7 @@ systemctl enable httpd
 |参数|说明|
 |:--:|:--:|
 |ServerRoot|服务器根目录|
-|ServerAdmin|管理员邮箱|
+|ServerAdmin|管理员邮箱| 
 |User|运行服务的用户|
 |Group|运行服务的用户组|
 |ServerName|网站服务器的域名|
@@ -190,7 +190,28 @@ Listen 8080
 # systemctl disable firewalld.service 
 ```
 
+如果你想修改Apache的默认文件夹的位置，那么需要做的是修改配置文件conf/httpd.conf中的文件夹参数，修改之后还有修改该文件的访问权限：
 
+```xml
+DocumentRoot "/home/www"   ------你的目录
+
+#
+# Relax access to content within /var/www.
+#
+<Directory "/home/www">    ------你的目录
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    # Allow open access:
+    Require all granted
+</Directory>
+
+# Further relax access to the default document root:
+<Directory "/home/www">    ------你的目录
+    #
+    # Possible values for the
+ ```
+
+`chmod -R 755 /home/www ` /home/www为你想要修改的位置，同时关闭SELinux永久设置。不要设置在root/目录下，因为root是超级管理员，其他用户访问不了。同时完成以上操作就可以更换目录。
 
 
 
