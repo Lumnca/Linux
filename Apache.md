@@ -297,4 +297,24 @@ Listen 8088   #设置监听端口8088
 
 `#systemctl restart httpd` 重启
 
+**基于不同IP**
 
+添加一个IP：
+
+`#nmcli con modify ens33+ipv4.address 192.168.240.200/24`
+
+重启网络：`systemctl restart network`
+
+在httpd.conf中添加：
+```
+<Directory "/home/studnet/www">
+         Options Indexes FollowSymLinks
+         AllowOverride all
+        Require all granted
+</Directory>
+
+<VirtualHost 192.168.10.100:86>    -----重新的ip定位
+        DocumentRoot "/home/student/www"
+        ServerName   www.ibm.com
+</VirtualHost>
+```
