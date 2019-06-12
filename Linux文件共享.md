@@ -6,6 +6,8 @@
 
 :arrow_double_down:[Samba](#a1)
 
+:arrow_double_down:[Samba配置步骤](#a2)
+
 
 ***
 
@@ -87,10 +89,123 @@ samba安装: `#yum install samba`
 **:two:设置samba用户密码**
 
 ```
-·系统用户密码和Samba用户的密码是不同的
-·命令：#smbpasswd
-·作用：设置Samba用户密码
-·其原理是通过读取/etc/passwd文件中存在的用户名，并设置密码
-·示例：
-·#smbpasswd alice
+系统用户密码和Samba用户的密码是不同的
+命令：#smbpasswd
+作用：设置Samba用户密码
+其原理是通过读取/etc/passwd文件中存在的用户名，并设置密码
+示例：
+#smbpasswd alice
 ```
+
+***
+
+<b id='a2'></b>
+
+### :game_die:Samba配置步骤 ###
+
+:arrow_double_up:[返回目录](#t)
+
+假设我们要实现以下需求：
+
+|共享名|路径|权限|
+|:--|:---|:-----|
+|SHAREDOC|`/smb/all` |所有人员包括来宾均可以访问仅允许特定组的用户进行读写访问|
+|RDDOCS | `/smb/user` |如建立一个组RD：包含3个用户：Alice,jack,Tom可以访问user|
+
+
+**1、建立共享文件夹及文件**：
+
+```
+mkdir -p /smb/user
+mkdir -p /smb/all
+
+touch /smb/all/file.txt
+touch /smb/user/file.txt
+```
+
+
+**2、建立可访问用户和组**
+
+建立系统账号（只能用于共享）
+```
+#useradd alice -s /bin/nologin
+#useradd jack -s /bin/nologin
+#useradd tom -s /bin/nologin
+#useradd RD -s/ bin/nologin
+```
+
+修改用户组（增加附加组）
+```
+#usermod-aG RD alice
+#usermod-aG RD jack
+#usermod-aG RD tom
+```
+
+如下添加一个，并检査:
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/a31.png)
+
+
+**3、修改目录权限**
+
+```
+#chgrp RD /smb/all
+#chgrp RD /smb/user
+#chown RD /smb/all
+#chown RD /smb/user
+#chmod 775 /smb/all  ->user group 完全控制
+#chmod 775 /smb/user
+```
+
+
+**4、配置smb.conf**
+
+备份原文件
+
+```
+#cd /etc/samba
+#cp smb.conf smb.conf.bak
+```
+删除原文件内容`echo '' > smb.conf` 添加如下配置：
+
+```
+
+[global]
+        workgroup = WORKGROUP
+        server string = My Samba Server
+        netbios name = MySamba
+        security = user
+        map to guest = Bad User
+        passdb backend = tdbsam
+
+[SHAREDOCS]   ----------> windows显示的文件夹名称
+        path = /smb/all
+        public = yes
+        readonly = yes
+        browseable = yes
+
+[RDDOCS]     ----------> windows显示的文件夹名称
+        path = /smb/user
+        valid users = @RD
+        write list = @RD
+        public = no
+        create mask = 0644
+        directory mask = 0755
+```
+
+关闭防火墙和SeaLinux，在任意地址栏输入 ： \\你的地址即可。
+
+如`\\XXX.`
+
+
+
+
+
+
+
+
+
+
+
+
+
