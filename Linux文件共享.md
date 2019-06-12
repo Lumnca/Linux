@@ -195,9 +195,13 @@ touch /smb/user/file.txt
 
 关闭防火墙和SeaLinux，在任意地址栏输入 ： \\你的地址即可。
 
-如`\\XXX.`
+如`\\XXX.XXX.XXX.XXX`
 
+如果需要输入密码凭证输入前面你设置的用户密码即可：
 
+![](https://github.com/Lumnca/Linux/blob/master/Img/a32.png)
+
+出现文件夹表示配置成功！
 
 
 
