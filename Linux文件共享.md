@@ -145,6 +145,16 @@ touch /smb/user/file.txt
 
 ![](https://github.com/Lumnca/Linux/blob/master/Img/a31.png)
 
+添加用户(tom)访问密码：
+
+`smbpasswd -a tom`
+
+然后输入两次即可：
+
+```
+New SMB password:
+Retype new SMB password:
+```
 
 **3、修改目录权限**
 
@@ -174,8 +184,8 @@ touch /smb/user/file.txt
         workgroup = WORKGROUP
         server string = My Samba Server
         netbios name = MySamba
-        security = user
-        map to guest = Bad User
+        security = user          
+        map to guest = Bad User  //共享模式
         passdb backend = tdbsam
 
 [SHAREDOCS]   ----------> windows显示的文件夹名称
