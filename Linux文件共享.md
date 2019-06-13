@@ -249,7 +249,7 @@ Retype new SMB password:
 
 **:four:安装nfs（自动关联rpc）**
 
->#yum install-y nfs-utils
+>#yum install -y nfs-utils
 
 运行：
 
