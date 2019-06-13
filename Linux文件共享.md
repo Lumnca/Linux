@@ -8,6 +8,7 @@
 
 :arrow_double_down:[Samba配置步骤](#a2)
 
+:arrow_double_down:[NTFS配置](#a3)
 
 ***
 
@@ -214,6 +215,13 @@ Retype new SMB password:
 出现文件夹表示配置成功！
 
 
+***
+
+<b id='a3'></b>
+
+### :game_die:NTFS配置 ###
+
+:arrow_double_up:[返回目录](#t)
 
 
 
