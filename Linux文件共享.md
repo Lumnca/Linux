@@ -264,3 +264,82 @@ Retype new SMB password:
 >#systemctl start rpcbind
 
 >#systemctl start nfs-server
+
+**:five:相关命令**
+
+`rpcinfo` 显示那些使用portmap注册的程序的信息，并向程序进行RPC调用，检查它们是否正常运行
+`exportfs` nfs服务命令，用于查看状态，加载配置文件等,如：exportfs-rv重新加载配置文件更多：man exports
+`showmount -e [nfs服务器IP]` 检查NFS服务器端是否有目录共享
+`nfsstat` 查看NFS的运行状态
+
+配置文件：/etc/export
+
+export文件默认为空，根据需要配置共享文件夹： `/etc/exports`文件内容格式：
+
+`<输出目录>[客户端1选项（访问权限，用户映射，其他）][客户端2选项（访问权限，用户映射，其他）]…`
+
+`输出目录`
+
+输出目录是指NFS系统中需要共享给客户机使用的目录；
+
+`客户端`
+
+客户端是指网络中可以访问这个NFS输出目录的计算机客户端常用的指定方式：
+
+指定ip地址的主机：192.168.240.132
+
+指定子网中的所有主机：192.168.0.0/24 192.168.0.0/255.255.255.0
+
+指定域名的主机：david.bsmart.cn
+
+指定域中的所有主机：*.bsmart.cn
+
+所有主机：*
+
+`选项`
+
+选项用来设置输出目录的访问权限、用户映射等NFS主要有3类选项：访问权限选项
+
+* 设置输出目录只读：ro
+* 设置输出目录读写：rw
+
+`用户映射选项`
+
+* all_squash：将远程访问的所有普通用户及所属组都映射为匿名用户或用户组（nfsnobody）；
+* no_all_squash：与all_squash取反（默认设置）；
+* root_squash：将root用户及所属组都映射为匿名用户或用户组（默认设置）；
+* no_root_squash：与rootsquash取反；
+
+anonuid=xxx：将远程访问的所有用户都映射为匿名用户，并指定该用户为本地用户（UID=xxx）默认为nfsnobody（65534）；anongid=xxx：将远程访问的所有用户组都映射为匿名用户组账户，并指定该匿名用户组账户为本地用户组账户（GID=xxx），默认为nfsnobody（65534）；
+
+`其它选项`
+
+* secure：限制客户端只能从小于1024的tcp/ip端口连接nfs服务器（默认设置）；insecure：允许客户端从大于1024的tcp/ip端口连接服务器；* sync：将数据同步写入内存缓冲区与磁盘中，效率低，但可以保证数据的一致性；async：将数据先保存在内存缓冲区中，必要时才写入磁盘；
+
+**:six:配置步骤**
+
+第一步主机建立共享文件夹/temp
+
+>mkdir /temp
+
+第二步配置文件:vim /etc/exports,并添加如下内容：
+
+`/temp  *(rw,fsid=0,anonuid=65534,anongid=65534)`  
+
+/temp 为共享文件夹 修改权限：`chmod 777 /temp`
+
+第三部：启动服务关闭防火墙和SeaLinux。
+
+第四部访问：
+
+```
+showmount -e 47.106.254.86      ---查看该主机是否有共享文件夹
+mount -t nfs4 47.106.254.86:/ /mnt/nfs        ---挂载在/mnt/nfs   文件夹下
+```
+
+操作如下图：
+
+![](https://github.com/Lumnca/Linux/blob/master/Img/a33.png)
+
+
+
