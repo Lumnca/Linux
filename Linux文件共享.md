@@ -223,11 +223,44 @@ Retype new SMB password:
 
 :arrow_double_up:[返回目录](#t)
 
+**:one:概念**
 
+* NFS（Network File System/网络文件系统）
+* NFS是FreeBSD支持的文件系统中的一种，由Sun公司开发，于1984年向外公布
+* NFS允许网络中的计算机之间通过TCP/IP网络共享资源
+* 在NFS的应用中，本地NFS的客户端应用可以透明地读写位于远端NFS服务器上的文件，就像访问本地文件一样
+* NFS类似于Windows中的映射网络驱动器功能
 
+**:two:特点**
 
+```
+1、NFS用于设置Linux系统之间的文件共享；
+2、NFS只是一种文件系统，本身没有传输功能，是基于RPC协议实现的，才能达到两个Linux系统之间的文件目录共享；
+3、NFS为C/S架构；
+```
 
+**:three:优点**
 
+```
+1、节省本地存储空间，将常用的数据存放在一台NFS服务器上且可以通过网络访问，那么本地终端将可以减少自身存储空间的使用。
+2、用户不需要在网络中的每个机器上都建有Home目录，Home目录可以放在NFS服务器上且可以在网络上被访问使用。
+3、一些存储设备可以在网络上被别的机器使用，提高设备利用率
+```
 
+**:four:安装nfs（自动关联rpc）**
 
+>#yum install-y nfs-utils
 
+运行：
+
+设置开机启动：
+
+>#systemctl enable rpcbind
+
+>#systemctl enable nfs-server
+
+运行服务：
+
+>#systemctl start rpcbind
+
+>#systemctl start nfs-server
