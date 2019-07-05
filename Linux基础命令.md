@@ -26,11 +26,11 @@
 
 >shutdown now           #立即关机
 
->shutdown+2             #2min后关机
+>shutdown +2             #2min后关机
 
->shutdown-r now         #重启计算机
+>shutdown -r now         #重启计算机
 
->shutdown-h 17：00      #下午5点关机并关闭电源
+>shutdown -h 17：00      #下午5点关机并关闭电源
 
 重启
 
